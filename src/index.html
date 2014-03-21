@@ -1,0 +1,76 @@
+<html>
+	<head>
+	<title>
+		测试接口
+	</title>
+	<meta charset='utf-8'/>
+	<script type="text/javascript" src="js/faye.js"></script>
+
+	<script type="text/javascript" src="js/jquery.js"></script>
+
+	<script type="text/javascript" src="js/fayehelper.js"></script>
+	<script>	  
+		function get_query_string_value_with_key(item){
+			var svalue = location.search.match(new RegExp("[\?\&]" 
+						+ item 
+						+ "=([^\&]*)(\&?)","i"));
+			
+			return svalue ? svalue[1] : svalue;
+		}
+
+		function send(){
+			var v = $('#text').val();
+			if(v.length ==0 ) return;
+			r_log_info(v+'----');
+		}
+
+		$(function(){
+			var channel = $.trim(
+				get_query_string_value_with_key('name').replace('\'','').replace('\'','')
+			);
+			var c = new FayeHelper('http://106.187.49.166:9200/faye',channel);
+			
+			$('#send_btn').click(function(){
+				// send();
+				var v = $('#text').val();
+				if(v.length ==0 ) return;
+				
+				r_log_with_channel('sang',v);
+			});
+		
+			$("body").bind('keyup',function(event) {  
+				if(event.keyCode==13){  
+					send();
+				}     
+			});   
+		
+		});
+	</script>
+	</head>
+	<body>
+		<fieldset>
+			<legend>
+				message console
+			</legend>
+			<div id='send_msg'>
+				<input type='input' id='text' maxlength="180" size="180"/>
+				<input type='button' value='send' id='send_btn'>
+			</div>
+		</fieldset>
+		<div class='msg_box_container'> 
+			<div class='msg_box'>
+				<h4>接收的消息</h4>
+				<div id='income_msg'>
+
+				</div>
+			</div>
+ 
+			<div class='msg_box' style='display:none;'>
+				<h1>发送的消息</h1>
+				<div id='outgo_msg'>
+
+				</div>
+			</div>
+		</div>
+	</body>
+<html>
