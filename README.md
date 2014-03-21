@@ -11,3 +11,12 @@
 		-d '{"channel": "/foo", "data": "hi", "ext": {"password": "..."}}'
 		
 
+## 功能
+
+- user login
+- user online
+- user offline
+- user exit
+- p2p
+- discuss group
+- load chatsession history
